@@ -1,3 +1,6 @@
+# Take an eight character string representing the board layout
+# e.g perl xf.pl 36271405
+# and return all mirrors and rotations (12 total -- not necessarily distinct)
 my $s = shift;
 my @am, @a90, @a90m;
 #my @a = split //,$s;
@@ -31,6 +34,13 @@ sub t90 {
   return join '',@s90
 }
 
+sub mirror {
+  my $s = shift;
+  my $sm;
+  ($sm = $s) =~ tr/01234567/76543210/;
+  return $sm;
+}
+
 p("a",@a);
 p("am",@am);
 p("a90",@a90);
@@ -39,12 +49,14 @@ p("a180",@a180);
 p("a180m",@a180m);
 p("a270",@a270);
 p("a270m",@a270m);
+
+=disabled
 p("test",@t);
 
-($sm = $s) =~ tr/01234567/76543210/;
+$sm = mirror($s);
 printf "%-5.5s %s\n","a",$s;
 printf "%-5.5s %s\n","am",$sm;
 printf "%-5.5s %s\n","a90",t90($s);
 printf "%-5.5s %s\n","a180",t90(t90($s));
 printf "%-5.5s %s\n","a270",t90(t90(t90($s)));
-
+=cut
